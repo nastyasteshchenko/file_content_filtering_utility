@@ -21,6 +21,7 @@ record Options(List<Path> inputFiles, Path resultPath, String namesPrefix, boole
         private Boolean needShortStatistic;
         private Boolean needFullStatistic;
 
+        @SuppressWarnings("UnusedReturnValue")
         Builder resultPath(String resultPath) throws UserInputException {
 
             checkForDuplicates("-o", this.resultPath);
@@ -39,6 +40,7 @@ record Options(List<Path> inputFiles, Path resultPath, String namesPrefix, boole
             return this;
         }
 
+        @SuppressWarnings("UnusedReturnValue")
         Builder namesPrefix(String namesPrefix) throws UserInputException {
 
             checkForDuplicates("-p", this.namesPrefix);
@@ -47,6 +49,7 @@ record Options(List<Path> inputFiles, Path resultPath, String namesPrefix, boole
             return this;
         }
 
+        @SuppressWarnings("UnusedReturnValue")
         Builder notRewriteFiles() throws UserInputException {
 
             checkForDuplicates("-a", this.rewriteFiles);
@@ -55,6 +58,7 @@ record Options(List<Path> inputFiles, Path resultPath, String namesPrefix, boole
             return this;
         }
 
+        @SuppressWarnings("UnusedReturnValue")
         Builder needShortStatistic() throws UserInputException {
 
             checkForDuplicates("-s", this.needShortStatistic);
@@ -63,6 +67,7 @@ record Options(List<Path> inputFiles, Path resultPath, String namesPrefix, boole
             return this;
         }
 
+        @SuppressWarnings("UnusedReturnValue")
         Builder needFullStatistic() throws UserInputException {
 
             checkForDuplicates("-f", this.needFullStatistic);
