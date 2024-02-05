@@ -2,6 +2,11 @@ package cft.test.task;
 
 class UserInputException extends Exception {
 
+    static final String availableOptions = """
+            Available options:
+
+            """;
+
     private UserInputException(String message) {
         super(message);
     }
@@ -10,11 +15,11 @@ class UserInputException extends Exception {
         return new UserInputException(String.format("double definition of '%s' option", optionName));
     }
 
-    static UserInputException resultPathIsNotDirectory(String resultPath) {
-        return new UserInputException(String.format("result path '%s' is not a directory", resultPath));
+    static UserInputException wrongDirectory(String dirName) {
+        return new UserInputException(String.format("cannot access '%s': No such file or directory\n\n" + availableOptions, dirName));
     }
 
-    static UserInputException resultPathDoesNotExist(String resultPath) {
-        return new UserInputException(String.format("result path '%s' does not exist", resultPath));
+    static UserInputException noArgument(String optionName) {
+        return new UserInputException(String.format("option requires an argument -- '%s'\n\n" + availableOptions, optionName));
     }
 }
