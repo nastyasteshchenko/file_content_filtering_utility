@@ -19,6 +19,10 @@ class UserInputException extends Exception {
         return new UserInputException(String.format("cannot access '%s': No such file or directory\n\n" + availableOptions, dirName));
     }
 
+    static UserInputException fileIsNotDirectory(String path) {
+        return new UserInputException(String.format("file '%s' is not a directory", path));
+    }
+
     static UserInputException noArgument(String optionName) {
         return new UserInputException(String.format("option requires an argument -- '%s'\n\n" + availableOptions, optionName));
     }
