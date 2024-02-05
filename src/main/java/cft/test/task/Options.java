@@ -18,5 +18,42 @@ record Options(List<Path> inputFiles, Path resultPath, String namesPrefix, boole
         private Boolean rewriteFiles;
         private Boolean needShortStatistic;
         private Boolean needFullStatistic;
+
+        //TODO check
+
+        Builder resultPath(String resultPath){
+
+            this.resultPath = Path.of(resultPath);
+
+            return this;
+        }
+
+        Builder namesPrefix(String namesPrefix){
+
+            this.namesPrefix = namesPrefix;
+
+            return this;
+        }
+
+        Builder notRewriteFiles(){
+
+            this.rewriteFiles = false;
+
+            return this;
+        }
+
+        Builder needShortStatistic(){
+
+            this.needShortStatistic = true;
+
+            return this;
+        }
+
+        Builder needFullStatistic(){
+
+            this.needFullStatistic = true;
+
+            return this;
+        }
     }
 }
