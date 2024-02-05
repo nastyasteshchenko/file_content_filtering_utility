@@ -21,39 +21,56 @@ record Options(List<Path> inputFiles, Path resultPath, String namesPrefix, boole
 
         //TODO check
 
-        Builder resultPath(String resultPath){
+        Builder resultPath(String resultPath) throws UserInputException {
+
+            checkForDuplicates("-o", this.resultPath);
 
             this.resultPath = Path.of(resultPath);
 
             return this;
         }
 
-        Builder namesPrefix(String namesPrefix){
+        Builder namesPrefix(String namesPrefix) throws UserInputException {
+
+            checkForDuplicates("-p", this.namesPrefix);
 
             this.namesPrefix = namesPrefix;
 
             return this;
         }
 
-        Builder notRewriteFiles(){
+        Builder notRewriteFiles() throws UserInputException {
+
+            checkForDuplicates("-a", this.rewriteFiles);
 
             this.rewriteFiles = false;
 
             return this;
         }
 
-        Builder needShortStatistic(){
+        Builder needShortStatistic() throws UserInputException {
+
+            checkForDuplicates("-s", this.needShortStatistic);
 
             this.needShortStatistic = true;
 
             return this;
         }
 
-        Builder needFullStatistic(){
+        Builder needFullStatistic() throws UserInputException {
+
+            checkForDuplicates("-f", this.needFullStatistic);
 
             this.needFullStatistic = true;
 
             return this;
         }
+
+        private <T> void checkForDuplicates(String optionName, T value) throws UserInputException {
+            if (value != null) {
+                throw UserInputException.duplicateOption(optionName);
+            }
+        }
+
     }
 }
