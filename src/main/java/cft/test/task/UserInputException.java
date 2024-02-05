@@ -24,7 +24,7 @@ class UserInputException extends Exception {
     }
 
     static UserInputException noArgument(String optionName) {
-        return new UserInputException(String.format("option requires an argument -- '%s'\n\n" + availableOptions, optionName));
+        return new UserInputException(String.format("option '%s' requires an argument\n\n" + availableOptions, optionName));
     }
 
     static UserInputException noInputFiles() {
