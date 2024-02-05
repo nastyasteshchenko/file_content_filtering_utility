@@ -12,7 +12,7 @@ record Options(List<Path> inputFiles, Path resultPath, String namesPrefix, boole
         private static final boolean NEED_SHORT_STATISTIC = false;
         private static final boolean NEED_FULL_STATISTIC = false;
         private static final Path DEFAULT_RESULT_PATH = Path.of(".");
-        private static final String  DEFAULT_NAMES_PREFIX = "";
+        private static final String DEFAULT_NAMES_PREFIX = "";
 
         private List<Path> inputFiles;
         private Path resultPath;
