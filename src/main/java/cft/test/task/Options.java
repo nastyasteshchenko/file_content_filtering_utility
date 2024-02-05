@@ -1,5 +1,6 @@
 package cft.test.task;
 
+import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.List;
 
@@ -19,13 +20,21 @@ record Options(List<Path> inputFiles, Path resultPath, String namesPrefix, boole
         private Boolean needShortStatistic;
         private Boolean needFullStatistic;
 
-        //TODO check
-
         Builder resultPath(String resultPath) throws UserInputException {
 
             checkForDuplicates("-o", this.resultPath);
 
-            this.resultPath = Path.of(resultPath);
+            Path dir = Path.of(resultPath);
+
+            if (Files.notExists(dir.toAbsolutePath())) {
+                throw UserInputException.wrongDirectory(resultPath);
+            }
+
+            if (!Files.isDirectory(dir.toAbsolutePath())) {
+                throw UserInputException.fileIsNotDirectory(resultPath);
+            }
+
+            this.resultPath = dir;
 
             return this;
         }
