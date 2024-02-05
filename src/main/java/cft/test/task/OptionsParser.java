@@ -25,22 +25,22 @@ public class OptionsParser {
 
                 case "-p" -> {
 
-                    if (i + 2 == args.length) {
+                    if (i + 1 >= args.length) {
                         throw UserInputException.noArgument("-p");
                     }
 
                     builder.namesPrefix(args[i + 1]);
-                    ++i;
+                    i+=2;
                 }
 
                 case "-o" -> {
 
-                    if (i + 2 == args.length) {
+                    if (i + 1 >= args.length) {
                         throw UserInputException.noArgument("-o");
                     }
 
                     builder.resultPath(args[i + 1]);
-                    ++i;
+                    i+=2;
                 }
 
                 default -> {
