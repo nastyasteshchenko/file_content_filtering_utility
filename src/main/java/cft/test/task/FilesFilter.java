@@ -1,6 +1,8 @@
 package cft.test.task;
 
-import java.nio.file.Path;
+import java.io.IOException;
+import java.nio.channels.FileChannel;
+import java.nio.file.*;
 import java.util.List;
 
 class FilesFilter {
@@ -21,13 +23,62 @@ class FilesFilter {
     }
 
     void filter() {
-        List<Path> inputFiles = options.inputFiles();
-    }
-    @SuppressWarnings("BooleanMethodIsAlwaysInverted")
-    private static boolean isInteger(String str) {
+        List<Path> inputFilesPaths = options.inputFilesPaths();
+
+        boolean isAtLeastOneInt = false;
+        boolean isAtLeastOneFloat = false;
+        boolean isAtLeastOneString = false;
 
         try {
-            Integer.parseInt(str);
+            for (Path inputFilePath : inputFilesPaths) {
+                List<String> allFileLines = Files.readAllLines(inputFilePath);
+                for (String line : allFileLines) {
+                    if (isInteger(line)) {
+                        if (!isAtLeastOneInt) {
+                            prepareOutputFile(intsOutputPath);
+                            isAtLeastOneInt = true;
+                        }
+                        Files.write(intsOutputPath, (line + '\n').getBytes(), StandardOpenOption.APPEND);
+                        continue;
+                    }
+                    if (isFloat(line)) {
+                        if (!isAtLeastOneFloat) {
+                            prepareOutputFile(floatsOutputPath);
+                            isAtLeastOneFloat = true;
+                        }
+                        Files.write(floatsOutputPath, (line + '\n').getBytes(), StandardOpenOption.APPEND);
+                        continue;
+                    }
+                    if (!isAtLeastOneString) {
+                        prepareOutputFile(stringsOutputPath);
+                        isAtLeastOneString = true;
+                    }
+                    Files.write(stringsOutputPath, (line + '\n').getBytes(), StandardOpenOption.APPEND);
+                }
+            }
+        } catch (IOException e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
+    private void prepareOutputFile(Path outputPath) throws IOException {
+        if (Files.notExists(outputPath)) {
+            Files.createFile(outputPath);
+        } else {
+            if (options.rewriteFiles()) {
+                clearFileContent(outputPath);
+            }
+        }
+    }
+
+    private void clearFileContent(Path path) throws IOException {
+        FileChannel.open(path, StandardOpenOption.WRITE).truncate(0).close();
+    }
+
+    @SuppressWarnings("BooleanMethodIsAlwaysInverted")
+    private boolean isInteger(String str) {
+        try {
+            Long.parseLong(str);
             return true;
         } catch (NumberFormatException e) {
             return false;
@@ -35,10 +86,9 @@ class FilesFilter {
     }
 
     @SuppressWarnings("BooleanMethodIsAlwaysInverted")
-    private static boolean isFloat(String str) {
-
+    private boolean isFloat(String str) {
         try {
-            Float.parseFloat(str);
+            Double.parseDouble(str);
             return true;
         } catch (NumberFormatException e) {
             return false;
