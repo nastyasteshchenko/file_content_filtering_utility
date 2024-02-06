@@ -44,8 +44,7 @@ public class OptionsParser {
                 }
 
                 default -> {
-
-                    //TODO input files
+                    builder.inputFile(args[i]);
                     ++i;
                 }
             }
