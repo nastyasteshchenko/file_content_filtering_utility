@@ -5,7 +5,11 @@ class UserInputException extends Exception {
     static final String availableOptions = """
             Available options:
 
-            """;
+            -p\tset the prefix of the output file names
+            -o\tset the output path
+            -s\tprint short statistics
+            -f\tprint the full statistics
+            -a\tnot rewrite output files""";
 
     private UserInputException(String message) {
         super(message);
