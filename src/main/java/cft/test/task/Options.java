@@ -14,7 +14,6 @@ record Options(List<Path> inputFiles, Path outputPath, String namesPrefix, boole
         private static final boolean NEED_FULL_STATISTICS = false;
         private static final Path DEFAULT_OUTPUT_PATH = Path.of(".");
         private static final String DEFAULT_NAMES_PREFIX = "";
-
         private List<Path> inputFiles;
         private Path outputPath;
         private String namesPrefix;
