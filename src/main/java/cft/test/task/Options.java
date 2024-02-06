@@ -2,6 +2,7 @@ package cft.test.task;
 
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.ArrayList;
 import java.util.List;
 
 record Options(List<Path> inputFiles, Path resultPath, String namesPrefix, boolean rewriteFiles,
@@ -22,15 +23,37 @@ record Options(List<Path> inputFiles, Path resultPath, String namesPrefix, boole
         private Boolean needFullStatistic;
 
         @SuppressWarnings("UnusedReturnValue")
+        Builder inputFile(String inputPath) throws UserInputException {
+
+            Path file = Path.of(inputPath);
+
+            checkIfFileExists(inputPath, file);
+
+            if (!Files.isRegularFile(file.toAbsolutePath())) {
+                throw UserInputException.wrongInputFile(inputPath);
+            }
+
+            if (inputFiles == null) {
+                inputFiles = new ArrayList<>();
+            }
+
+            if (inputFiles.contains(file)) {
+                throw UserInputException.duplicateInputFile(inputPath);
+            }
+
+            inputFiles.add(file);
+
+            return this;
+        }
+
+        @SuppressWarnings("UnusedReturnValue")
         Builder resultPath(String resultPath) throws UserInputException {
 
             checkForDuplicates("-o", this.resultPath);
 
             Path dir = Path.of(resultPath);
 
-            if (Files.notExists(dir.toAbsolutePath())) {
-                throw UserInputException.wrongDirectory(resultPath);
-            }
+            checkIfFileExists(resultPath, dir);
 
             if (!Files.isDirectory(dir.toAbsolutePath())) {
                 throw UserInputException.fileIsNotDirectory(resultPath);
@@ -114,5 +137,10 @@ record Options(List<Path> inputFiles, Path resultPath, String namesPrefix, boole
             }
         }
 
+        private static void checkIfFileExists(String inputPath, Path file) throws UserInputException {
+            if (Files.notExists(file.toAbsolutePath())) {
+                throw UserInputException.wrongFile(inputPath);
+            }
+        }
     }
 }
