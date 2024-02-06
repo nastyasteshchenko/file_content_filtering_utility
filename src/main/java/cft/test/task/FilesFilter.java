@@ -16,47 +16,58 @@ class FilesFilter {
 
     FilesFilter(Options options) {
         this.options = options;
+
         String resultPath = options.outputPath().toString();
         intsOutputPath = Path.of(resultPath, options.namesPrefix() + DEFAULT_INTS_OUTPUT);
         floatsOutputPath = Path.of(resultPath, options.namesPrefix() + DEFAULT_FLOATS_OUTPUT);
         stringsOutputPath = Path.of(resultPath, options.namesPrefix() + DEFAULT_STRINGS_OUTPUT);
     }
 
-    void filter() {
+    void filter(List<String> integers, List<String> floats, List<String> strings) {
+        filterInputFile(integers, floats, strings);
+        writeFilteredInfo(integers, floats, strings);
+    }
+
+    private void filterInputFile(List<String> integers, List<String> floats, List<String> strings) {
         List<Path> inputFilesPaths = options.inputFilesPaths();
 
-        boolean isAtLeastOneInt = false;
-        boolean isAtLeastOneFloat = false;
-        boolean isAtLeastOneString = false;
-
-        try {
-            for (Path inputFilePath : inputFilesPaths) {
+        for (Path inputFilePath : inputFilesPaths) {
+            try {
                 List<String> allFileLines = Files.readAllLines(inputFilePath);
                 for (String line : allFileLines) {
                     if (isInteger(line)) {
-                        if (!isAtLeastOneInt) {
-                            prepareOutputFile(intsOutputPath);
-                            isAtLeastOneInt = true;
-                        }
-                        Files.write(intsOutputPath, (line + '\n').getBytes(), StandardOpenOption.APPEND);
+                        integers.add(line);
                         continue;
                     }
                     if (isFloat(line)) {
-                        if (!isAtLeastOneFloat) {
-                            prepareOutputFile(floatsOutputPath);
-                            isAtLeastOneFloat = true;
-                        }
-                        Files.write(floatsOutputPath, (line + '\n').getBytes(), StandardOpenOption.APPEND);
+                        floats.add(line);
                         continue;
                     }
-                    if (!isAtLeastOneString) {
-                        prepareOutputFile(stringsOutputPath);
-                        isAtLeastOneString = true;
-                    }
-                    Files.write(stringsOutputPath, (line + '\n').getBytes(), StandardOpenOption.APPEND);
+                    strings.add(line);
                 }
+            } catch (IOException e) {
+                //TODO
+                System.out.println(e.getMessage());
+            }
+        }
+    }
+
+    private void writeFilteredInfo(List<String> integers, List<String> floats, List<String> strings) {
+        try {
+            if (!integers.isEmpty()) {
+                prepareOutputFile(intsOutputPath);
+                Files.write(intsOutputPath, integers, StandardOpenOption.APPEND);
+            }
+            if (!floats.isEmpty()) {
+                prepareOutputFile(floatsOutputPath);
+                Files.write(floatsOutputPath, floats, StandardOpenOption.APPEND);
+            }
+            if (!strings.isEmpty()) {
+                prepareOutputFile(stringsOutputPath);
+                Files.write(stringsOutputPath, strings, StandardOpenOption.APPEND);
             }
         } catch (IOException e) {
+            //TODO
             System.out.println(e.getMessage());
         }
     }
