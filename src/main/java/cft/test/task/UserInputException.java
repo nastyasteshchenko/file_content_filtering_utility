@@ -15,8 +15,16 @@ class UserInputException extends Exception {
         return new UserInputException(String.format("double definition of '%s' option", optionName));
     }
 
-    static UserInputException wrongDirectory(String dirName) {
+    static UserInputException duplicateInputFile(String inputFileName) {
+        return new UserInputException(String.format("double definition of '%s' file", inputFileName));
+    }
+
+    static UserInputException wrongFile(String dirName) {
         return new UserInputException(String.format("cannot access '%s': No such file or directory\n\n" + availableOptions, dirName));
+    }
+
+    static UserInputException wrongInputFile(String fileName) {
+        return new UserInputException(String.format("cannot read from '%s'\n\n", fileName));
     }
 
     static UserInputException fileIsNotDirectory(String path) {
