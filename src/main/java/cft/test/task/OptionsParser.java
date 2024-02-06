@@ -44,7 +44,7 @@ public class OptionsParser {
                 }
 
                 default -> {
-                    builder.inputFile(args[i]);
+                    builder.inputFilePath(args[i]);
                     ++i;
                 }
             }

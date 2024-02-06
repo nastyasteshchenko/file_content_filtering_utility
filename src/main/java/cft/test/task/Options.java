@@ -5,7 +5,7 @@ import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
 
-record Options(List<Path> inputFiles, Path outputPath, String namesPrefix, boolean rewriteFiles,
+record Options(List<Path> inputFilesPaths, Path outputPath, String namesPrefix, boolean rewriteFiles,
                boolean needShortStatistic, boolean needFullStatistic) {
 
     static class Builder {
@@ -14,7 +14,7 @@ record Options(List<Path> inputFiles, Path outputPath, String namesPrefix, boole
         private static final boolean NEED_FULL_STATISTICS = false;
         private static final Path DEFAULT_OUTPUT_PATH = Path.of(".");
         private static final String DEFAULT_NAMES_PREFIX = "";
-        private List<Path> inputFiles;
+        private List<Path> inputFilesPaths;
         private Path outputPath;
         private String namesPrefix;
         private Boolean rewriteFiles;
@@ -22,25 +22,25 @@ record Options(List<Path> inputFiles, Path outputPath, String namesPrefix, boole
         private Boolean needFullStatistics;
 
         @SuppressWarnings("UnusedReturnValue")
-        Builder inputFile(String inputPath) throws UserInputException {
+        Builder inputFilePath(String inputPath) throws UserInputException {
 
-            Path file = Path.of(inputPath);
+            Path filePath = Path.of(inputPath);
 
-            checkIfFileExists(inputPath, file);
+            checkIfFileExists(inputPath, filePath);
 
-            if (!Files.isRegularFile(file.toAbsolutePath())) {
+            if (!Files.isRegularFile(filePath.toAbsolutePath())) {
                 throw UserInputException.wrongInputFile(inputPath);
             }
 
-            if (inputFiles == null) {
-                inputFiles = new ArrayList<>();
+            if (inputFilesPaths == null) {
+                inputFilesPaths = new ArrayList<>();
             }
 
-            if (inputFiles.contains(file)) {
+            if (inputFilesPaths.contains(filePath)) {
                 throw UserInputException.duplicateInputFile(inputPath);
             }
 
-            inputFiles.add(file);
+            inputFilesPaths.add(filePath);
 
             return this;
         }
@@ -100,12 +100,12 @@ record Options(List<Path> inputFiles, Path outputPath, String namesPrefix, boole
 
         Options build() throws UserInputException {
             fillDefaultForOptions();
-            return new Options(inputFiles, outputPath, namesPrefix, rewriteFiles, needShortStatistics, needFullStatistics);
+            return new Options(inputFilesPaths, outputPath, namesPrefix, rewriteFiles, needShortStatistics, needFullStatistics);
         }
 
         private void fillDefaultForOptions() throws UserInputException {
 
-            if (inputFiles == null) {
+            if (inputFilesPaths == null) {
                 throw UserInputException.noInputFiles();
             }
 
