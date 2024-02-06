@@ -22,6 +22,26 @@ class FilesFilter {
 
     void filter() {
         List<Path> inputFiles = options.inputFiles();
-        //for (inputFiles)
+    }
+    @SuppressWarnings("BooleanMethodIsAlwaysInverted")
+    private static boolean isInteger(String str) {
+
+        try {
+            Integer.parseInt(str);
+            return true;
+        } catch (NumberFormatException e) {
+            return false;
+        }
+    }
+
+    @SuppressWarnings("BooleanMethodIsAlwaysInverted")
+    private static boolean isFloat(String str) {
+
+        try {
+            Float.parseFloat(str);
+            return true;
+        } catch (NumberFormatException e) {
+            return false;
+        }
     }
 }
