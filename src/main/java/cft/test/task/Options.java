@@ -5,22 +5,22 @@ import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
 
-record Options(List<Path> inputFiles, Path resultPath, String namesPrefix, boolean rewriteFiles,
+record Options(List<Path> inputFiles, Path outputPath, String namesPrefix, boolean rewriteFiles,
                boolean needShortStatistic, boolean needFullStatistic) {
 
     static class Builder {
         private static final boolean REWRITE_FILES = true;
-        private static final boolean NEED_SHORT_STATISTIC = false;
-        private static final boolean NEED_FULL_STATISTIC = false;
-        private static final Path DEFAULT_RESULT_PATH = Path.of(".");
+        private static final boolean NEED_SHORT_STATISTICS = false;
+        private static final boolean NEED_FULL_STATISTICS = false;
+        private static final Path DEFAULT_OUTPUT_PATH = Path.of(".");
         private static final String DEFAULT_NAMES_PREFIX = "";
 
         private List<Path> inputFiles;
-        private Path resultPath;
+        private Path outputPath;
         private String namesPrefix;
         private Boolean rewriteFiles;
-        private Boolean needShortStatistic;
-        private Boolean needFullStatistic;
+        private Boolean needShortStatistics;
+        private Boolean needFullStatistics;
 
         @SuppressWarnings("UnusedReturnValue")
         Builder inputFile(String inputPath) throws UserInputException {
@@ -47,19 +47,19 @@ record Options(List<Path> inputFiles, Path resultPath, String namesPrefix, boole
         }
 
         @SuppressWarnings("UnusedReturnValue")
-        Builder resultPath(String resultPath) throws UserInputException {
+        Builder outputPath(String outputPath) throws UserInputException {
 
-            checkForDuplicates("-o", this.resultPath);
+            checkForDuplicates("-o", this.outputPath);
 
-            Path dir = Path.of(resultPath);
+            Path dir = Path.of(outputPath);
 
-            checkIfFileExists(resultPath, dir);
+            checkIfFileExists(outputPath, dir);
 
             if (!Files.isDirectory(dir.toAbsolutePath())) {
-                throw UserInputException.fileIsNotDirectory(resultPath);
+                throw UserInputException.fileIsNotDirectory(outputPath);
             }
 
-            this.resultPath = dir;
+            this.outputPath = dir;
             return this;
         }
 
@@ -82,26 +82,26 @@ record Options(List<Path> inputFiles, Path resultPath, String namesPrefix, boole
         }
 
         @SuppressWarnings("UnusedReturnValue")
-        Builder needShortStatistic() throws UserInputException {
+        Builder needShortStatistics() throws UserInputException {
 
-            checkForDuplicates("-s", this.needShortStatistic);
+            checkForDuplicates("-s", this.needShortStatistics);
 
-            this.needShortStatistic = true;
+            this.needShortStatistics = true;
             return this;
         }
 
         @SuppressWarnings("UnusedReturnValue")
-        Builder needFullStatistic() throws UserInputException {
+        Builder needFullStatistics() throws UserInputException {
 
-            checkForDuplicates("-f", this.needFullStatistic);
+            checkForDuplicates("-f", this.needFullStatistics);
 
-            this.needFullStatistic = true;
+            this.needFullStatistics = true;
             return this;
         }
 
         Options build() throws UserInputException {
             fillDefaultForOptions();
-            return new Options(inputFiles, resultPath, namesPrefix, rewriteFiles, needShortStatistic, needFullStatistic);
+            return new Options(inputFiles, outputPath, namesPrefix, rewriteFiles, needShortStatistics, needFullStatistics);
         }
 
         private void fillDefaultForOptions() throws UserInputException {
@@ -110,8 +110,8 @@ record Options(List<Path> inputFiles, Path resultPath, String namesPrefix, boole
                 throw UserInputException.noInputFiles();
             }
 
-            if (resultPath == null) {
-                resultPath = DEFAULT_RESULT_PATH;
+            if (outputPath == null) {
+                outputPath = DEFAULT_OUTPUT_PATH;
             }
 
             if (namesPrefix == null) {
@@ -122,12 +122,12 @@ record Options(List<Path> inputFiles, Path resultPath, String namesPrefix, boole
                 rewriteFiles = REWRITE_FILES;
             }
 
-            if (needShortStatistic == null) {
-                needShortStatistic = NEED_SHORT_STATISTIC;
+            if (needShortStatistics == null) {
+                needShortStatistics = NEED_SHORT_STATISTICS;
             }
 
-            if (needFullStatistic == null) {
-                needFullStatistic = NEED_FULL_STATISTIC;
+            if (needFullStatistics == null) {
+                needFullStatistics = NEED_FULL_STATISTICS;
             }
         }
 

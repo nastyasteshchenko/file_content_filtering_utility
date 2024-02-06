@@ -9,7 +9,7 @@ public class OptionsParser {
         for (int i = 0; i < args.length; ) {
             switch (args[i]) {
                 case "-s" -> {
-                    builder.needShortStatistic();
+                    builder.needShortStatistics();
                     i += 1;
                 }
 
@@ -19,7 +19,7 @@ public class OptionsParser {
                 }
 
                 case "-f" -> {
-                    builder.needFullStatistic();
+                    builder.needFullStatistics();
                     i += 1;
                 }
 
@@ -39,7 +39,7 @@ public class OptionsParser {
                         throw UserInputException.noArgument("-o");
                     }
 
-                    builder.resultPath(args[i + 1]);
+                    builder.outputPath(args[i + 1]);
                     i+=2;
                 }
 
