@@ -29,11 +29,11 @@ public class Main {
 
     private static void printStatistics(Options options, StatisticsManager statisticsManager) {
         if (options.needShortStatistic()) {
-            statisticsManager.printShortStatistics();
+            statisticsManager.countAndPrintShortStatistics();
         }
 
         if (options.needFullStatistic()) {
-            statisticsManager.printFullStatistics();
+            statisticsManager.countAndPrintFullStatistics();
         }
     }
 
