@@ -22,18 +22,16 @@ public class Main {
 
         filesFilter.filter(integers, floats, strings);
 
-        StatisticsManager statisticsManager = new StatisticsManager(integers, floats, strings);
-
-        printStatistics(options, statisticsManager);
+        printStatistics(options, filesFilter);
     }
 
-    private static void printStatistics(Options options, StatisticsManager statisticsManager) {
+    private static void printStatistics(Options options, FilesFilter filter) {
         if (options.needShortStatistic()) {
-            statisticsManager.countAndPrintShortStatistics();
+            filter.printShortStatistics();
         }
 
         if (options.needFullStatistic()) {
-            statisticsManager.countAndPrintFullStatistics();
+            filter.printFullStatistics();
         }
     }
 
