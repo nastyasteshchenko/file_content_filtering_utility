@@ -21,6 +21,20 @@ public class Main {
         List<String> strings = new ArrayList<>();
 
         filesFilter.filter(integers, floats, strings);
+
+        StatisticsManager statisticsManager = new StatisticsManager(integers, floats, strings);
+
+        printStatistics(options, statisticsManager);
+    }
+
+    private static void printStatistics(Options options, StatisticsManager statisticsManager) {
+        if (options.needShortStatistic()) {
+            statisticsManager.printShortStatistics();
+        }
+
+        if (options.needFullStatistic()) {
+            statisticsManager.printFullStatistics();
+        }
     }
 
     private static Options parseOptions(String[] args) {
