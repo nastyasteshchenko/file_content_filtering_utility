@@ -1,11 +1,14 @@
 package cft.test.task;
 
 import java.io.IOException;
+import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.nio.channels.FileChannel;
 import java.nio.file.*;
 import java.util.List;
 
 class FilesFilter {
+
     private static final String DEFAULT_INTS_OUTPUT = "integers.txt";
     private static final String DEFAULT_FLOATS_OUTPUT = "floats.txt";
     private static final String DEFAULT_STRINGS_OUTPUT = "strings.txt";
@@ -86,23 +89,31 @@ class FilesFilter {
         FileChannel.open(path, StandardOpenOption.WRITE).truncate(0).close();
     }
 
-    @SuppressWarnings("BooleanMethodIsAlwaysInverted")
     private boolean isInteger(String str) {
         try {
             Long.parseLong(str);
             return true;
-        } catch (NumberFormatException e) {
-            return false;
+        } catch (NumberFormatException e1) {
+            try {
+                new BigInteger(str);
+                return true;
+            } catch (NumberFormatException e2) {
+                return false;
+            }
         }
     }
 
-    @SuppressWarnings("BooleanMethodIsAlwaysInverted")
     private boolean isFloat(String str) {
         try {
             Double.parseDouble(str);
             return true;
         } catch (NumberFormatException e) {
-            return false;
+            try {
+                new BigDecimal(str);
+                return true;
+            } catch (NumberFormatException e2) {
+                return false;
+            }
         }
     }
 }
