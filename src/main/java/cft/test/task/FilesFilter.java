@@ -132,34 +132,6 @@ class FilesFilter {
         statistics = statisticsBuilder.build();
     }
 
-    Number max(Number a, Number b) {
-        if (a instanceof BigInteger ai) {
-            if (b instanceof BigInteger bi) {
-                return ai.compareTo(bi) > 0 ? ai : bi;
-            }
-        }
-        if (a instanceof BigDecimal ad) {
-            if (b instanceof BigDecimal bd) {
-                return ad.compareTo(bd) > 0 ? ad : bd;
-            }
-        }
-        return null;
-    }
-
-    Number min(Number a, Number b) {
-        if (a instanceof BigInteger ai) {
-            if (b instanceof BigInteger bi) {
-                return ai.compareTo(bi) < 0 ? ai : bi;
-            }
-        }
-        if (a instanceof BigDecimal ad) {
-            if (b instanceof BigDecimal bd) {
-                return ad.compareTo(bd) < 0 ? ad : bd;
-            }
-        }
-        return null;
-    }
-
     private void writeFilteredInfo(List<String> integers, List<String> floats, List<String> strings) {
         try {
             if (!integers.isEmpty()) {
@@ -220,5 +192,33 @@ class FilesFilter {
                 return false;
             }
         }
+    }
+
+    private Number max(Number a, Number b) {
+        if (a instanceof BigInteger ai) {
+            if (b instanceof BigInteger bi) {
+                return ai.compareTo(bi) > 0 ? ai : bi;
+            }
+        }
+        if (a instanceof BigDecimal ad) {
+            if (b instanceof BigDecimal bd) {
+                return ad.compareTo(bd) > 0 ? ad : bd;
+            }
+        }
+        return null;
+    }
+
+    private Number min(Number a, Number b) {
+        if (a instanceof BigInteger ai) {
+            if (b instanceof BigInteger bi) {
+                return ai.compareTo(bi) < 0 ? ai : bi;
+            }
+        }
+        if (a instanceof BigDecimal ad) {
+            if (b instanceof BigDecimal bd) {
+                return ad.compareTo(bd) < 0 ? ad : bd;
+            }
+        }
+        return null;
     }
 }
