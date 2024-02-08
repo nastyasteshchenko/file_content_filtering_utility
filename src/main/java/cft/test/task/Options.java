@@ -136,7 +136,7 @@ record Options(List<Path> inputFilesPaths, Path outputPath, String namesPrefix, 
             }
         }
 
-        private static void checkIfFileExists(String inputPath, Path file) throws UserInputException {
+        private void checkIfFileExists(String inputPath, Path file) throws UserInputException {
             if (Files.notExists(file.toAbsolutePath())) {
                 throw UserInputException.wrongFile(inputPath);
             }
