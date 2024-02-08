@@ -48,11 +48,11 @@ class StatisticsManager {
         String minStrLength = opMinStrLength.map(s -> String.valueOf(s.length())).orElse("no min");
         String maxStrLength = opMaxStrLength.map(s -> String.valueOf(s.length())).orElse("no max");
 
-        String fullIntegersStatistics = String.format("Integers:\nMin:\t%s\nMax:\t%s\nSum:\t%s\nAvr:\t%s\n",
-                minInts, maxInts, intsSum, intsAvr);
+        String fullIntegersStatistics = String.format("Integers:\nAmount:\t%s\nMin:\t%s\nMax:\t%s\nSum:\t%s\nAvr:\t%s\n",
+                integers.size(), minInts, maxInts, intsSum, intsAvr);
 
-        String fullFloatsStatistics = String.format("Floats:\nMin:\t%s\nMax:\t%s\nSum:\t%s\nAvr:\t%s\n",
-                minFloats, maxFloats, floatsSum, floatsAvr);
+        String fullFloatsStatistics = String.format("Floats:\nAmount:\t%s\nMin:\t%s\nMax:\t%s\nSum:\t%s\nAvr:\t%s\n",
+                floats.size(), minFloats, maxFloats, floatsSum, floatsAvr);
 
         String fullStringsStatistics = String.format("Strings:\nAmount:\t%s\nMin length:\t%s\nMax length:\t%s\n",
                 strings.size(), minStrLength, maxStrLength);
