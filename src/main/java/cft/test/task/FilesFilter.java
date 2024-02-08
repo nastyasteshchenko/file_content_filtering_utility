@@ -10,6 +10,7 @@ import java.util.List;
 
 class FilesFilter {
 
+    private static final String WRITING_OUTPUT_ERROR = "Error while writing to file ";
     private static final String DEFAULT_INTS_OUTPUT = "integers.txt";
     private static final String DEFAULT_FLOATS_OUTPUT = "floats.txt";
     private static final String DEFAULT_STRINGS_OUTPUT = "strings.txt";
@@ -75,7 +76,7 @@ class FilesFilter {
                 for (String line : allFileLines) {
                     if (isInteger(line)) {
                         BigInteger newInt = new BigInteger(line);
-                        if (maxInt == null && minInt == null) {
+                        if (maxInt == null || minInt == null) {
                             maxInt = newInt;
                             minInt = newInt;
                         } else {
@@ -88,7 +89,7 @@ class FilesFilter {
                     }
                     if (isFloat(line)) {
                         BigDecimal newFloat = new BigDecimal(line);
-                        if (maxFloat == null && minFloat == null) {
+                        if (maxFloat == null || minFloat == null) {
                             maxFloat = newFloat;
                             minFloat = newFloat;
                         } else {
@@ -108,7 +109,6 @@ class FilesFilter {
                         maxStrLength = Math.max(strLength, maxStrLength);
                     }
                     strings.add(line);
-
                 }
             } catch (IOException e) {
                 //TODO
@@ -138,17 +138,26 @@ class FilesFilter {
                 prepareOutputFile(intsOutputPath);
                 Files.write(intsOutputPath, integers, StandardOpenOption.APPEND);
             }
+        } catch (IOException e) {
+            System.err.println(WRITING_OUTPUT_ERROR + intsOutputPath + "\n" + e.getMessage());
+        }
+
+        try {
             if (!floats.isEmpty()) {
                 prepareOutputFile(floatsOutputPath);
                 Files.write(floatsOutputPath, floats, StandardOpenOption.APPEND);
             }
+        } catch (IOException e) {
+            System.err.println(WRITING_OUTPUT_ERROR + floatsOutputPath + "\n" + e.getMessage());
+        }
+
+        try {
             if (!strings.isEmpty()) {
                 prepareOutputFile(stringsOutputPath);
                 Files.write(stringsOutputPath, strings, StandardOpenOption.APPEND);
             }
         } catch (IOException e) {
-            //TODO
-            System.out.println(e.getMessage());
+            System.err.println(WRITING_OUTPUT_ERROR + stringsOutputPath + "\n" + e.getMessage());
         }
     }
 
