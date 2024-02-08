@@ -50,6 +50,7 @@ public record Statistics(String maxInt, String minInt, String intsSum, String in
             return this;
         }
 
+        @SuppressWarnings("UnusedReturnValue")
         Builder minStrLength(Integer minStrLength) {
             if (minStrLength != null) {
                 this.minStrLength = String.valueOf(minStrLength);
@@ -99,6 +100,7 @@ public record Statistics(String maxInt, String minInt, String intsSum, String in
             return this;
         }
 
+        @SuppressWarnings("UnusedReturnValue")
         Builder intsAvr(BigDecimal intsAvr) {
             if (intsAvr != null) {
                 this.intsAvr = intsAvr.toString();
@@ -106,6 +108,7 @@ public record Statistics(String maxInt, String minInt, String intsSum, String in
             return this;
         }
 
+        @SuppressWarnings("UnusedReturnValue")
         Builder floatsAvr(BigDecimal floatsAvr) {
             if (floatsAvr != null) {
                 this.floatsAvr = floatsAvr.toString();
