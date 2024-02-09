@@ -1,6 +1,6 @@
 package cft.test.task;
 
-public class OptionsParser {
+class OptionsParser {
 
     static Options parse(String[] args) throws UserInputException {
 
