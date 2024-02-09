@@ -3,9 +3,9 @@ package cft.test.task;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 
-public record Statistics(String maxInt, String minInt, String intsSum, String intsAvr,
-                         String maxFloat, String minFloat, String floatsSum, String floatsAvr, String maxStrLength,
-                         String minStrLength, String amountInts, String amountFloats, String amountStrings) {
+record Statistics(String maxInt, String minInt, String intsSum, String intsAvr, String maxFloat, String minFloat,
+                  String floatsSum, String floatsAvr, String maxStrLength, String minStrLength, String amountInts,
+                  String amountFloats, String amountStrings) {
 
     static class Builder {
         private String maxInt = "no max";
