@@ -12,6 +12,7 @@ java -jar file_content_filtering_utility.jar args
 Instead of the word 'args' you need to write options for the utility  
 
 **_______________________________**  
-Java version: 20  
-Build tool: Maven  
-Maven version: 3.9.2
+
+***Java version:*** 20  
+***Build tool:*** Maven  
+***Maven version:*** 3.9.2
