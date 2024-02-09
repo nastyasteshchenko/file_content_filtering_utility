@@ -1,2 +1,2 @@
-# file_content_filtering_utility
-CFT Java TestTask
+# File content filtering utility
+Task description is in file Java_TestTask.pdf
