@@ -9,3 +9,4 @@ mvn exec:java -Dexec.mainClass="oop.diskUsage.Jdu" -Dexec.args="args"
 **To run jar:**  
 java -jar file_content_filtering_utility.jar args
 
+Instead of the word 'args' you need to write options for the utility
