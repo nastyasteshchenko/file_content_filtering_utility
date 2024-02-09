@@ -8,9 +8,12 @@ import java.nio.channels.FileChannel;
 import java.nio.file.*;
 import java.util.List;
 
+import static cft.test.task.NumbersUtils.*;
+
 class FilesFilter {
 
     private static final String WRITING_OUTPUT_ERROR = "Error while writing to file ";
+    private static final String READING_INPUT_ERROR = "Error while reading file ";
     private static final String DEFAULT_INTS_OUTPUT = "integers.txt";
     private static final String DEFAULT_FLOATS_OUTPUT = "floats.txt";
     private static final String DEFAULT_STRINGS_OUTPUT = "strings.txt";
@@ -66,8 +69,8 @@ class FilesFilter {
         BigInteger minInt = null;
         BigDecimal maxFloat = null;
         BigDecimal minFloat = null;
-        Integer minStrLength = null;
         Integer maxStrLength = null;
+        Integer minStrLength = null;
 
         List<Path> inputFilesPaths = options.inputFilesPaths();
         for (Path inputFilePath : inputFilesPaths) {
@@ -111,8 +114,7 @@ class FilesFilter {
                     strings.add(line);
                 }
             } catch (IOException e) {
-                //TODO
-                System.out.println(e.getMessage());
+                System.out.println(READING_INPUT_ERROR + inputFilePath + "\n" + e.getMessage());
             }
         }
 
@@ -133,15 +135,23 @@ class FilesFilter {
     }
 
     private void writeFilteredInfo(List<String> integers, List<String> floats, List<String> strings) {
+        writeIntegers(integers);
+        writeFloats(floats);
+        writeStrings(strings);
+    }
+
+    private void writeStrings(List<String> strings) {
         try {
-            if (!integers.isEmpty()) {
-                prepareOutputFile(intsOutputPath);
-                Files.write(intsOutputPath, integers, StandardOpenOption.APPEND);
+            if (!strings.isEmpty()) {
+                prepareOutputFile(stringsOutputPath);
+                Files.write(stringsOutputPath, strings, StandardOpenOption.APPEND);
             }
         } catch (IOException e) {
-            System.err.println(WRITING_OUTPUT_ERROR + intsOutputPath + "\n" + e.getMessage());
+            System.err.println(WRITING_OUTPUT_ERROR + stringsOutputPath + "\n" + e.getMessage());
         }
+    }
 
+    private void writeFloats(List<String> floats) {
         try {
             if (!floats.isEmpty()) {
                 prepareOutputFile(floatsOutputPath);
@@ -150,14 +160,16 @@ class FilesFilter {
         } catch (IOException e) {
             System.err.println(WRITING_OUTPUT_ERROR + floatsOutputPath + "\n" + e.getMessage());
         }
+    }
 
+    private void writeIntegers(List<String> integers) {
         try {
-            if (!strings.isEmpty()) {
-                prepareOutputFile(stringsOutputPath);
-                Files.write(stringsOutputPath, strings, StandardOpenOption.APPEND);
+            if (!integers.isEmpty()) {
+                prepareOutputFile(intsOutputPath);
+                Files.write(intsOutputPath, integers, StandardOpenOption.APPEND);
             }
         } catch (IOException e) {
-            System.err.println(WRITING_OUTPUT_ERROR + stringsOutputPath + "\n" + e.getMessage());
+            System.err.println(WRITING_OUTPUT_ERROR + intsOutputPath + "\n" + e.getMessage());
         }
     }
 
@@ -175,59 +187,4 @@ class FilesFilter {
         FileChannel.open(path, StandardOpenOption.WRITE).truncate(0).close();
     }
 
-    private boolean isInteger(String str) {
-        try {
-            Long.parseLong(str);
-            return true;
-        } catch (NumberFormatException e1) {
-            try {
-                new BigInteger(str);
-                return true;
-            } catch (NumberFormatException e2) {
-                return false;
-            }
-        }
-    }
-
-    private boolean isFloat(String str) {
-        try {
-            Double.parseDouble(str);
-            return true;
-        } catch (NumberFormatException e) {
-            try {
-                new BigDecimal(str);
-                return true;
-            } catch (NumberFormatException e2) {
-                return false;
-            }
-        }
-    }
-
-    private Number max(Number a, Number b) {
-        if (a instanceof BigInteger ai) {
-            if (b instanceof BigInteger bi) {
-                return ai.compareTo(bi) > 0 ? ai : bi;
-            }
-        }
-        if (a instanceof BigDecimal ad) {
-            if (b instanceof BigDecimal bd) {
-                return ad.compareTo(bd) > 0 ? ad : bd;
-            }
-        }
-        return null;
-    }
-
-    private Number min(Number a, Number b) {
-        if (a instanceof BigInteger ai) {
-            if (b instanceof BigInteger bi) {
-                return ai.compareTo(bi) < 0 ? ai : bi;
-            }
-        }
-        if (a instanceof BigDecimal ad) {
-            if (b instanceof BigDecimal bd) {
-                return ad.compareTo(bd) < 0 ? ad : bd;
-            }
-        }
-        return null;
-    }
 }
