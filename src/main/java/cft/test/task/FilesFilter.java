@@ -38,13 +38,13 @@ class FilesFilter {
     }
 
     void printFullStatistics() {
-        String fullIntegersStatistics = String.format("Integers:\nAmount:\t%s\nMin:\t%s\nMax:\t%s\nSum:\t%s\nAvr:\t%s\n",
+        String fullIntegersStatistics = String.format("Integers:\n\nAmount:\t%s\nMin:\t%s\nMax:\t%s\nSum:\t%s\nAvr:\t%s\n",
                 statistics.amountInts(), statistics.minInt(), statistics.maxInt(), statistics.intsSum(), statistics.intsAvr());
 
-        String fullFloatsStatistics = String.format("Floats:\nAmount:\t%s\nMin:\t%s\nMax:\t%s\nSum:\t%s\nAvr:\t%s\n",
+        String fullFloatsStatistics = String.format("Floats:\n\nAmount:\t%s\nMin:\t%s\nMax:\t%s\nSum:\t%s\nAvr:\t%s\n",
                 statistics.amountFloats(), statistics.minFloat(), statistics.maxFloat(), statistics.floatsSum(), statistics.floatsAvr());
 
-        String fullStringsStatistics = String.format("Strings:\nAmount:\t%s\nMin length:\t%s\nMax length:\t%s\n",
+        String fullStringsStatistics = String.format("Strings:\n\nAmount:\t%s\nMin length:\t%s\nMax length:\t%s\n",
                 statistics.amountStrings(), statistics.minStrLength(), statistics.maxStrLength());
 
         System.out.println("-----------------------\nFull statistics:\n");
